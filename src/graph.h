@@ -1,9 +1,22 @@
-#ifdef GRAPH_H
-#define #GRAPH_H
+/**
+ * @file graph.h
+ * @brief Definição do Tipo Abstrato de Dados (TAD) para um Grafo Direcionado.
+ /** Este módulo fornece a interface para a criação, manipulação e liberação de 
+ * um grafo baseado em Listas de Adjacência. Ele oculta a implementação interna 
+ * (Struct Opaca), garantindo o encapsulamento dos dados. O grafo é focado em 
+ * representar uma malha viária, onde os vértices são cruzamentos e as arestas 
+ * são os trechos de rua que os conectam.
+ /** @note As estruturas internas (Graph_s, Vertex, Edge) estão definidas apenas
+ * no arquivo graph.c para manter a opacidade do TAD.
+ */
 
 
-/// @brief Tipo opaco de uma struct
-typedef struct graph_s *Graph;
+#ifndef GRAPH_H
+#define GRAPH_H
+
+
+/// @brief Tipo opaco de uma struct que representa o grafo
+typedef struct Graph_s *Graph;
 
 
 /// @brief Cria um novo grafo com 'n' vértices
@@ -31,6 +44,17 @@ void insertVertex(Graph g, char* id, double x, double y);
 /// @param vm Velocidade média que os carros trafegam na rua
 void insertEdge(Graph g, int origem, int destino, char* rua, char* lesq, char* ldir, double cmp, double vm);
 
+
+/// @brief Libera toda a memória alocada pelo grafo
+/// @param g Ponteiro para ao grafo que será liberado
+void freeGraph(Graph g);
+
+
+/// @brief Retorna o index de um vertex específico
+/// @param g Parametro para o grafo
+/// @param id Id do grafo que terá o index retornado 
+/// @return o index
+int getVertexIndex(Graph g, char *id);
 
 
 #endif
