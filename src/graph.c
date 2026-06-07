@@ -114,3 +114,83 @@ int getVertexIndex(Graph g, char *id){
     }
     return -1;
 }
+
+
+double getVertexX(Graph g, int index) {
+    if (g == NULL || index < 0 || index >= g->inserido) return 0.0;
+    return g->V[index].x;
+}
+
+
+double getVertexY(Graph g, int index) {
+    if (g == NULL || index < 0 || index >= g->inserido) return 0.0;
+    return g->V[index].y;
+}
+
+
+char* getVertexId(Graph g, int index) {
+    if (g == NULL || index < 0 || index >= g->inserido) return NULL;
+    return g->V[index].id;
+}
+
+
+int getNumVertices(Graph g) {
+    if (g == NULL) return 0;
+    return g->inserido;
+}
+
+
+int getNumEdges(Graph g) {
+    if (g == NULL) return 0;
+    return g->m;
+}
+
+
+Edge_t getFirstEdge(Graph g, int origem) {
+    if (g == NULL || origem < 0 || origem >= g->n) return NULL;
+    return g->E[origem]; 
+}
+
+
+Edge_t getNextEdge(Edge_t atual) {
+    if (atual == NULL) return NULL;
+    return atual->next; 
+}
+
+
+int getEdgeDest(Edge_t e) {
+    if (e == NULL) return -1;
+    return e->dest;
+}
+
+
+double getEdgeCmp(Edge_t e) {
+    if (e == NULL) return 0.0;
+    return e->cmp;
+}
+
+
+double getEdgeVm(Edge_t e) {
+    if (e == NULL) return 0.0;
+    return e->vm;
+}
+
+
+bool isEdgeActive(Edge_t e) {
+    if (e == NULL) return false;
+    return e->ativado;
+}
+
+void deactivateEdge(Graph g, int origem, int destino) {
+    if (g == NULL || origem < 0 || origem >= g->n) return;
+    
+    Edge *atual = g->E[origem];
+    
+    while(atual != NULL) {
+        if(atual->dest == destino) {
+            atual->ativado = false; 
+            return; 
+        }
+        atual = atual->next;
+    }
+}
