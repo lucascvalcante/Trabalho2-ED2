@@ -1,7 +1,19 @@
+
 #ifndef LIST_H
 #define LIST_H
 
-/// @brief Tipos opacos de escapsulamento   
+/**
+ * @file list.h
+ * @brief Interface de uma Lista Duplamente Encadeada Genérica (TAD).
+ * 
+ * @details Este módulo implementa uma estrutura de dados bidirecional abstrata
+ * utilizando encapsulamento estrito por meio de tipos opacos. É projetada para
+ * armazenar ponteiros genéricos (void*), permitindo reaproveitamento em múltiplos
+ * contextos (como armazenamento de formas geométricas ou no algoritmo de Dijkstra).
+ */
+
+
+ /// @brief Tipos opacos de escapsulamento   
 typedef struct Lista_s* Lista;
 typedef void* Node;
 
