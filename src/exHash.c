@@ -36,7 +36,7 @@ exHash init_exHash(const char* arquivo, uint32_t tamanho_bucket, size_t tamanho_
         return NULL;
     }
 
-    h->m = 40009;
+    h->m = tamanho_bucket;
     h->tamanho_dado = tamanho_dado;
 
     h->tabelas = (Node**) calloc(h->m, sizeof(Node*));
@@ -114,12 +114,7 @@ void* search_exHash(exHash h, const char* chave){
     Node* atual = h->tabelas[idx];
     while (atual){
         if(strcmp(atual->chave, chave)== 0){
-            void* copia = malloc(h->tamanho_dado);
-            if(!copia){
-                return NULL;
-            }
-            memcpy(copia, atual->dado, h->tamanho_dado);
-            return copia;
+            return atual->dado;
         }
         atual = atual->prox;
     }
