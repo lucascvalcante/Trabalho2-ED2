@@ -1,7 +1,11 @@
 /**
  * 
  * @brief Fila de Prioridades (Min-Heap) otimizada por índices para o Dijkstra.
- * 
+ * @details Esta estrutura implementa um Min-Heap focado em alta performance. 
+ * Ao utilizar um vetor de posições interno, ela elimina a necessidade de buscar 
+ * elementos linearmente, permitindo atualizações de distância e extração do 
+ * menor caminho de forma ultra rápida. Ideal para mapas com milhares de ruas.
+ *  
  */
 
 #ifndef MINHEAP_H

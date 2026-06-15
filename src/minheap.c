@@ -20,6 +20,7 @@ struct MinHeap_s{
 
 
 /// -Funções internas auxiliares: -///
+
 static void swapNodes(MinHeap h, int idx1, int idx2){
    HeapNode temp = h->vetor[idx1];
    
@@ -42,6 +43,34 @@ static void heapifyUp(MinHeap h, int idx){
 }
 
 
+static void heapifyDown(MinHeap h, int idx){
+    int menor, esquerda, direita;
+
+    while(1){
+        menor = idx;
+        esquerda = 2 * idx + 1;
+        direita = 2 * idx + 2;
+
+        if(esquerda < h->tamanho_atual && h->vetor[esquerda].distancia < h->vetor[menor].distancia){
+            menor = esquerda;
+        }    
+
+        if(direita < h->tamanho_atual && h->vetor[direita].distancia < h->vetor[menor].distancia){
+            menor = direita;
+        }
+
+        if(menor != idx){
+            swapNodes(h, idx, menor);
+            idx = menor;
+        }else{
+            break;
+        }
+    }
+}
+
+
+
+/// --Funções principais: --///
 
 MinHeap createMinHeap(int max_vertices){
     MinHeap h = (MinHeap) malloc(sizeof(struct MinHeap_s));
@@ -80,9 +109,11 @@ void freeMinHeap(MinHeap h){
     return;
 }
 
+
 bool isMinHeapEmpty(MinHeap h){
     return (h->tamanho_atual == 0);
 }
+
 
 bool isVertexInHeap(MinHeap h, int vertice_idx){
     if(!h || vertice_idx < 0 || vertice_idx >= h->capacidade){
@@ -92,3 +123,46 @@ bool isVertexInHeap(MinHeap h, int vertice_idx){
     }
 }
 
+
+
+void updateDistance(MinHeap h, int vertice_idx, double nova_distancia){
+    if(!h || vertice_idx < 0 || vertice_idx >= h->capacidade){
+        return;
+    } 
+
+    int i = h->posicao[vertice_idx];
+
+    if(i == -1){
+        i = h->tamanho_atual;
+        h->tamanho_atual++;
+
+        h->vetor[i].vertice_idx = vertice_idx;
+        h->vetor[i].distancia = nova_distancia;
+        h->posicao[vertice_idx] = i;
+
+        heapifyUp(h, i);
+
+    }else if(nova_distancia < h->vetor[i].distancia){
+        h->vetor[i].distancia = nova_distancia;
+        heapifyUp(h, i);
+    }
+}
+
+
+int extractMin(MinHeap h){
+    if(isMinHeapEmpty(h)){
+        return -1;
+    }
+
+    int vertice_menor = h->vetor[0].vertice_idx;
+    HeapNode ultimo_no = h->vetor[h->tamanho_atual - 1];
+    h->posicao[vertice_menor] = -1;
+    h->tamanho_atual--;
+
+    if(h->tamanho_atual > 0){
+        h->vetor[0] = ultimo_no;
+        h->posicao[ultimo_no.vertice_idx] = 0;
+        heapifyDown(h, 0);
+    }
+    return vertice_menor;
+}
