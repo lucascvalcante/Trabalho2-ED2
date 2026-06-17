@@ -1,3 +1,6 @@
+#ifndef MINHEAP_H
+#define MINHEAP_H
+
 /**
  * 
  * @brief Fila de Prioridades (Min-Heap) otimizada por índices para o Dijkstra.
@@ -7,10 +10,6 @@
  * menor caminho de forma ultra rápida. Ideal para mapas com milhares de ruas.
  *  
  */
-
-#ifndef MINHEAP_H
-#define MINHEAP_H
-
 
 #include <stdbool.h>
 

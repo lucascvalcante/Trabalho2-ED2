@@ -1,10 +1,6 @@
 #ifndef EXHASH_H
 #define EXHASH_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
-
 /**
  * @file exHash.h
  * @brief Módulo de Tabela Hash em memória RAM com encadeamento separado.
@@ -15,6 +11,9 @@
  * separado (listas encadeadas nos slots) e permite gerar relatórios estruturais (.hfd).
  */
 
+#include <stdint.h>
+#include <stdbool.h>
+#include <stddef.h>
 
 // Tipo opaco usando forward declaration. 
 typedef struct exHash_s* exHash;

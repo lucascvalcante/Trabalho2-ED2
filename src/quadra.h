@@ -1,8 +1,6 @@
 #ifndef QUADRA_H
 #define QUADRA_H
 
-#include <stddef.h>
-
 
 /**
  * @file quadra.h
@@ -14,6 +12,7 @@
  * manipular os dados geográficos que serão serializados na tabela hash.
  */
 
+#include <stddef.h>
  
 typedef struct quadra_s* Quadra;
 

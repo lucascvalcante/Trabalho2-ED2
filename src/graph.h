@@ -1,3 +1,6 @@
+#ifndef GRAPH_H
+#define GRAPH_H
+
 /**
  * @file graph.h
  * @brief Definição do Tipo Abstrato de Dados (TAD) para um Grafo Direcionado.
@@ -8,11 +11,8 @@
  * são os trechos de rua que os conectam.
  * @note As estruturas internas (Graph_s, Vertex, Edge) estão definidas apenas
  * no arquivo graph.c para manter a opacidade do TAD.
+
  */
-
-
-#ifndef GRAPH_H
-#define GRAPH_H
 #include <stdbool.h>
 
 
