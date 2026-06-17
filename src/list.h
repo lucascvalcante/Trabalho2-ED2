@@ -1,4 +1,3 @@
-
 #ifndef LIST_H
 #define LIST_H
 
@@ -27,11 +26,16 @@ Lista createList();
 void freeList(Lista l);
 
 
-/// @brief Insere um novo elementot genérico no fim da lista 
+/// @brief Insere um novo elemento genérico no fim da lista 
 /// @param l Ponteiro para a lista
 /// @param n Ponteiro para o novo nó(elemento) que será inserido
-/// @return A posição que o elemento foi inserido
-Node insertList(Lista l, Node n);
+void insertList(Lista l, Node n);
+
+
+/// @brief Insere um elemento genérico no início da lista
+/// @param l Ponteiro para a lista
+/// @param n Ponteiro para o novo nó que será adicionado
+void insertListStart(Lista l, Node n);
 
 
 /// @brief Retorna o tamanho atual da lista

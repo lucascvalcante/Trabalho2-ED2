@@ -31,8 +31,8 @@ Lista createList(){
 }
 
 
-Node insertList(Lista l, Node n){
-    if(!l || !n){
+void insertListEnd(Lista l, Node n){
+    if(!l){
         return NULL;
     }
 
@@ -48,16 +48,45 @@ Node insertList(Lista l, Node n){
         l->fim = novo;
         novo->ant = NULL;
         l->tamanho++;
-        return novo;
+        return;
     }else{
         l->fim->prox = novo;
         novo->ant = l->fim;
         l->fim = novo;
         l->tamanho++;
-        return novo;
+        return;
     }
 }
 
+
+void insertListStart(Lista l, Node n){
+    if(!l){
+        return;
+    }
+
+    nodeStruct *novo = malloc(sizeof(nodeStruct));
+    if(!novo){
+        return;
+    }
+
+    novo->dado = n;
+    novo->ant = NULL;
+
+    if(l->inicio == NULL){
+        l->inicio = novo;
+        l->fim = novo;
+        novo->prox = NULL;
+        l->tamanho++;
+        return;
+    }else{
+        l->inicio->ant = novo;
+        novo->prox = l->inicio;
+        l->inicio = novo;
+        l->tamanho++;
+        return;
+    }
+
+}
 
 int lengthList(Lista l){
     if(!l){
