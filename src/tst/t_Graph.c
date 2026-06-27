@@ -1,5 +1,4 @@
-#include "unity.h"
-#include "graph.h"
+#include "../unity.h"
 #include <stdlib.h>
 #include "../graph.h"
 
