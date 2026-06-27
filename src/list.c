@@ -33,12 +33,12 @@ Lista createList(){
 
 void insertListEnd(Lista l, Node n){
     if(!l){
-        return NULL;
+        return;
     }
 
     nodeStruct *novo = malloc(sizeof(nodeStruct));
     if(!novo){
-        return NULL;
+        return;
     }
 
     novo->dado = n;
@@ -59,7 +59,7 @@ void insertListEnd(Lista l, Node n){
 }
 
 
-void insertListStart(Lista l, Node n){
+void insertListHead(Lista l, Node n){
     if(!l){
         return;
     }

@@ -25,17 +25,16 @@ Lista createList();
 /// @param l Ponteiro para a lista que será liberada
 void freeList(Lista l);
 
-
-/// @brief Insere um novo elemento genérico no fim da lista 
-/// @param l Ponteiro para a lista
-/// @param n Ponteiro para o novo nó(elemento) que será inserido
-void insertList(Lista l, Node n);
-
-
 /// @brief Insere um elemento genérico no início da lista
 /// @param l Ponteiro para a lista
 /// @param n Ponteiro para o novo nó que será adicionado
-void insertListStart(Lista l, Node n);
+void insertListHead(Lista l, Node n);
+
+
+/// @brief Insere um elemento genérico no fim da lista
+/// @param l Ponteiro para a lista
+/// @param n Ponteiro para o novo nó adicionado
+void insertListEnd(Lista l, Node n);
 
 
 /// @brief Retorna o tamanho atual da lista
