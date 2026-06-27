@@ -3,11 +3,8 @@
 #include <stdio.h>
 #include "../list.h" 
 
-void setUp(void) {
-}
-
-void tearDown(void) {
-}
+void setUp(void) {}
+void tearDown(void) {}
 
 int* cria_inteiro(int valor) {
     int* novo = malloc(sizeof(int));
@@ -19,22 +16,21 @@ void test_ListaGenerica_CriacaoEInsercao(void) {
     Lista l = createList();
     TEST_ASSERT_NOT_NULL(l);
 
-    int* p1 = cria_inteiro(10);
-    int* p2 = cria_inteiro(20);
-    int* p3 = cria_inteiro(30);
+    int* val1 = cria_inteiro(10);
+    int* val2 = cria_inteiro(20);
+    int* val3 = cria_inteiro(30);
 
-    Node n1 = insertList(l, p1);
-    Node n2 = insertList(l, p2);
-    Node n3 = insertList(l, p3);
-
-    TEST_ASSERT_NOT_NULL(n1);
-    TEST_ASSERT_NOT_NULL(n2);
-    TEST_ASSERT_NOT_NULL(n3);
+    insertListHead(l, val1);
+    insertListHead(l, val2);
+    insertListHead(l, val3);
 
     TEST_ASSERT_EQUAL_INT(3, lengthList(l));
 
-    int* valor_removido = (int*) removeList(l, n2);
-    TEST_ASSERT_EQUAL_INT(20, *valor_removido);
+    Node pos_30 = getFirstList(l);     
+    Node pos_20 = getNextList(l, pos_30); 
+    int* valor_removido = (int*) removeList(l, pos_20); 
+    TEST_ASSERT_NOT_NULL(valor_removido);
+    TEST_ASSERT_EQUAL_INT(20, *valor_removido);    
     TEST_ASSERT_EQUAL_INT(2, lengthList(l));
     free(valor_removido); 
 
@@ -45,7 +41,7 @@ void test_ListaGenerica_CriacaoEInsercao(void) {
         atual = getNextList(l, atual);
     }
     
-    freeList(l);
+    freeList(l); 
 }
 
 int main(void) {
