@@ -1,5 +1,5 @@
-#include "unity.h"
-#include "quadra.h"
+#include "../unity.h"
+#include "../quadra.h"
 #include <stdlib.h>
 
 void setUp(void) {}
