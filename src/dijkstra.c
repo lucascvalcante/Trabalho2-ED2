@@ -47,7 +47,9 @@ Lista dijkstra(Graph g, int origem, int destino){
         int atual = destino;
 
         while(atual != -1){
-            insertListStart(caminho, atual);
+            int* indice_alocado = malloc(sizeof(int));
+            *indice_alocado = atual;
+            insertListHead(caminho, indice_alocado);
             atual = pai[atual];
         }
     }
