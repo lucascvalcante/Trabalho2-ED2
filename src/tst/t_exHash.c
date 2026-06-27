@@ -7,7 +7,7 @@ void setUp(void) {}
 void tearDown(void) {}
 
 void teste_fluxo_completo_hash_ram(void) {
-    exHash tabela = init_exHash("test", 0, get_tamanho_quadra());
+    exHash tabela = init_exHash("test", 10, get_tamanho_quadra());
     TEST_ASSERT_NOT_NULL(tabela);
 
     Quadra q1 = cria_quadra("86010-000", 10.0, 20.0, 100.0, 50.0, "1px", "red", "black");
@@ -37,8 +37,6 @@ void teste_fluxo_completo_hash_ram(void) {
 
     free_quadra(q1);
     free_quadra(q2);
-    free_quadra(buscada1); 
-    free_quadra(buscada2);
     
     close_exHash(tabela);
 }
