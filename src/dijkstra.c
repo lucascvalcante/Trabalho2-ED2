@@ -1,7 +1,8 @@
 #include "dijkstra.h"
 #include <float.h>
+#include <stdbool.h>
 
-Lista dijkstra(Graph g, int origem, int destino){
+Lista dijkstra(Graph g, int origem, int destino, bool por_tempo){
     int num_vertices = getNumVertices(g);
 
     double *dist = (double*) malloc(num_vertices * sizeof(double));
@@ -27,12 +28,16 @@ Lista dijkstra(Graph g, int origem, int destino){
         while(edge != NULL){
             int v = getEdgeDest(edge);
             double comprimento = getEdgeCmp(edge);
-            double vm = getEdgeVm(edge);
+            double peso;
 
-            double tempo = comprimento / vm;
-            
-            if(dist[u] + tempo < dist[v]){
-                dist[v] = dist[u] + tempo;
+            if(por_tempo){
+                double vm = getEdgeVm(edge);
+                peso = comprimento / vm;
+            }else{
+                peso = comprimento;
+            }
+            if(dist[u] + peso < dist[v]){
+                dist[v] = dist[u] + peso;
                 pai[v] = u;
                 updateDistance(fila, v, dist[v]);
             
