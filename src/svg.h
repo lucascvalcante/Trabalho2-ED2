@@ -116,4 +116,27 @@ void svg_rect_componente_conexo(FILE *svg, char *cor, double min_x, double min_y
 /// @param g Ponteiro para a estrutura do Grafo que contém as vias
 void svg_desenha_mapa_base(FILE *svg, Graph g);
 
+
+/// @brief Desenha uma linha tracejada no svg
+/// @param svg Ponteiro para o arquivo svg
+/// @param x1 Primeira coordenada 'x' da linha
+/// @param y1 Primeira coordenada 'y' da linha
+/// @param x2 Segunda coordeanda 'x' da linha
+/// @param y2 Segunda coordenada 'y' da linha
+/// @param cor Cor da linha
+/// @param sw Espessura da borda da linha
+void desenhar_linha_tracejada(FILE *svg, double x1, double y1, double x2, double y2, const char* cor, const char* sw);
+
+
+
+/// @brief Desenha uma bouding box no svg
+/// @param svg Ponteiro para o svg
+/// @param x Coordenada 'x' da bounding box
+/// @param y Coordenada 'y' da bounding box
+/// @param largura Largura da bounding box
+/// @param altura Altura da bouding box
+/// @param cor Cor da bouding box
+/// @param opacidade Opacidade da bouding box
+void desenhar_bounding_box(FILE *svg, double x, double y, double largura, double altura, const char *cor, double opacidade);
+
 #endif

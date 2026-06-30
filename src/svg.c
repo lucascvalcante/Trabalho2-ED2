@@ -146,3 +146,17 @@ void svg_desenha_mapa_base(FILE *svg, Graph g){
 }
 
 
+void desenhar_linha_tracejada(FILE *svg, double x1, double y1, double x2, double y2, const char* cor, const char* sw){
+    if(!svg) return;
+
+    fprintf(svg, "    <line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"%s\" stroke-width=\"%s\" stroke-dasharray=\"5,5\" />\n", 
+            x1, y1, x2, y2, cor, sw);
+}
+
+
+void desenhar_bounding_box(FILE *svg, double x, double y, double largura, double altura, const char *cor, double opacidade){
+    if(!svg) return;
+
+    fprintf(svg, "    <rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" fill-opacity=\"%f\" stroke=\"%s\" stroke-width=\"1.0px\" />\n",
+            x, y, largura, altura, cor, opacidade, cor);
+}
