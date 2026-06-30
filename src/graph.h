@@ -132,10 +132,49 @@ double getEdgeVm(Edge_t e);
 bool isEdgeActive(Edge_t e);
 
 
+/// @brief Define o status da rua como ativada
+/// @param e Ponteiro para a aresta(rua)
+/// @param status Status que será passado
+void setEdgeActivaded(Edge_t e, bool status);
+
+
 /// @brief Desativa uma rua específica, bloqueando o tráfego nela
 /// @param g Ponteiro para o grafo
 /// @param origem Index do vértice de origem da rua
 /// @param destino Index do vértice de destino da rua
 void deactivateEdge(Graph g, int origem, int destino);
+
+
+/// @brief Define uma nova velocidade média de aresta        
+/// @param e Ponteiro para a aresta
+/// @param vm Nova velocidade média
+void setEdgeVm(Edge_t e, double vm);
+
+
+/// @brief Retorna a velocidade média atual de uma aresta
+/// @param e Ponteiro para a aresta
+/// @return A velocidade média
+double getEdgeVm(Edge_t e);
+
+
+/// @brief Encontra os componentes fortemente conexos formados por arestas com velocidade < vl
+/// @param g Ponteiro para o grafo
+/// @param vl Velocidade limite 
+/// @param componentes Vetor já alocado (tamanho = num_vertices) que será preenchido com o ID da componente de cada vértice
+/// @return O número total de componentes conexos encontrados
+int encontrar_componentes_conexos(Graph g, double vl, int *componentes);
+
+
+/// @brief Calcula a Árvore Geradora Mínima (Kruskal) e marca as arestas da MST como ativadas
+/// @param g Ponteiro para o grafo
+void calcular_mst_kruskal(Graph g);
+
+
+/// @brief Encontra o id do vértice de uma coordenada (x,y)
+/// @param g Ponteiro para o grafo
+/// @param x Coordenada X
+/// @param y Coordenada Y
+/// @return O id
+int obter_vertice_mais_proximo(Graph g, double x, double y);
 
 #endif
