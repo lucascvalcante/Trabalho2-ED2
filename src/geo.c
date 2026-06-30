@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
+
 exHash ler_arquivo_geo(const char* nome_arquivo, int tamanho_hash){
     FILE *file = fopen(nome_arquivo, "r");
     if(file == NULL){
@@ -13,7 +14,7 @@ exHash ler_arquivo_geo(const char* nome_arquivo, int tamanho_hash){
 
     char linha[256];
 
-    exHash tabela = init_exHash("Quadras_geo", tamanho_hash, get_tamanho_quadra());
+    exHash tabela = init_exHash(tamanho_hash, get_tamanho_quadra());
 
     char atual_sw[20] = "1px";
     char atual_cfill[50] = "white";
