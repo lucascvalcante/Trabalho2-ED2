@@ -30,7 +30,7 @@ static uint32_t hash_string(const char* str) {
 
 
 
-exHash init_exHash(const char* arquivo, uint32_t tamanho_bucket, size_t tamanho_dado){
+exHash init_exHash(uint32_t tamanho_bucket, size_t tamanho_dado){
     exHash h = (exHash) malloc(sizeof(struct exHash_s));
     if(h == NULL){
         return NULL;

@@ -20,11 +20,10 @@ typedef struct exHash_s* exHash;
 
 
 /// @brief Inicializa uma nova tabela hash na memória RAM
-/// @param arquivo Caminho do arquivo (Mantido por compatibilidade, ignorado na RAM)
 /// @param tamanho_bucket Capacidade máxima do bucket (Mantido por compatibilidade, ignorado na RAM)
 /// @param tamanho_dado Tamanho em bytes do dado que será clonado/salvo (ex: sizeof(struct))
 /// @return Um ponteiro para a estrutura hash inicializada, ou NULL em caso de erro
-exHash init_exHash(const char* arquivo, uint32_t tamanho_bucket, size_t tamanho_dado);
+exHash init_exHash(uint32_t tamanho_bucket, size_t tamanho_dado);
 
 
 /// @brief Insere um novo par chave-valor na tabela hash. Trata colisões via encadeamento.
