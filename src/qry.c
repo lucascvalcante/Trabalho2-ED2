@@ -8,21 +8,35 @@
 #include "dijkstra.h"
 #include "list.h"
 
+#define MAX_REGS 32
+
 typedef struct {
     double x;
     double y;
     bool ativo;
 } Registradores;
 
-Registradores regs[32];
+Registradores regs[MAX_REGS];
 
 //-- FUNÇÕES ESTÁTICAS DE COMANDOS: --//
 
 static void cmd_o(FILE *qry, FILE *txt, FILE *svg, exHash quadras) {
-    char cep[50], face;
-    int num, reg_num;
-    fscanf(qry, "%d %s %c %d", &reg_num, cep, &face, &num);
+    int reg_num = -1, num = 0;
+    char cep[30] = {0};
+    char face = '\0';
+
+    int lidos = fscanf(qry, " R%d %29s %c %d", &reg_num, cep, &face, &num);
+
+    if (lidos != 4) {
+        fprintf(txt, "@o?: Erro de leitura nos parametros. Lidos: %d\n", lidos);
+        return;
+    }
     
+    if (reg_num < 0 || reg_num >= MAX_REGS) {
+        fprintf(txt, "@o?: Erro. Indice de registrador invalido (R%d).\n", reg_num);
+        return;
+    }
+
     Quadra q = search_exHash(quadras, cep);
 
     if (q == NULL) {
@@ -60,14 +74,18 @@ static void cmd_o(FILE *qry, FILE *txt, FILE *svg, exHash quadras) {
 
     desenhar_linha_tracejada(svg, x_end, y_end, x_end, 0.0, "red", "1.0px");
     
-    char txt_reg[10];
+    char txt_reg[10] = {0};
     sprintf(txt_reg, "R%d", reg_num);
     desenhar_texto_svg(svg, x_end, 10.0, txt_reg, "red"); 
 }
 
 static void cmd_mvm(FILE *qry, Graph g) {
-    double vm, x, y, h, w;
-    fscanf(qry, "%lf %lf %lf %lf %lf", &vm, &x, &y, &w, &h);
+    double vm = 0, x = 0, y = 0, h = 0, w = 0;
+    
+    if (fscanf(qry, "%lf %lf %lf %lf %lf", &vm, &x, &y, &w, &h) != 5) {
+        printf("mvm: Erro na leitura dos parametros.\n");
+        return;
+    }
     
     int total_vertices = getNumVertices(g);
 
@@ -92,11 +110,17 @@ static void cmd_mvm(FILE *qry, Graph g) {
 }
 
 static void cmd_regs(FILE *qry, FILE *txt, FILE *svg, Graph g) {
-    double vl;
-    fscanf(qry, "%lf", &vl);
+    double vl = 0;
+    
+    if (fscanf(qry, "%lf", &vl) != 1) {
+        fprintf(txt, "regs: Erro na leitura dos parametros.\n");
+        return;
+    }
 
     int total_vertices = getNumVertices(g);
-    int *componentes = (int*) malloc(total_vertices * sizeof(int));
+    if (total_vertices == 0) return;
+
+    int *componentes = (int*) calloc(total_vertices, sizeof(int));
 
     int qtd_componentes = encontrar_componentes_conexos(g, vl, componentes);
     fprintf(txt, "regs: Foram encontrados %d componentes conexos com velocidade inferior a %.2f.\n", qtd_componentes, vl);            
@@ -134,10 +158,13 @@ static void cmd_regs(FILE *qry, FILE *txt, FILE *svg, Graph g) {
     free(componentes); 
 }
 
-
 static void cmd_exp(FILE *qry, FILE *svg, Graph g){
-double vl;
-    fscanf(qry, "%lf", &vl);
+    double vl = 0;
+    
+    if (fscanf(qry, "%lf", &vl) != 1) {
+        printf("exp: Erro na leitura dos parametros.\n");
+        return;
+    }
 
     calcular_mst_kruskal(g);
 
@@ -169,10 +196,20 @@ double vl;
 }
 
 static void cmd_p(FILE *qry, FILE *txt, FILE *svg, Graph g) {
-    int r1, r2;
-    char cc[30], cr[30]; 
+    int r1 = -1, r2 = -1;
+    char cc[30] = {0}, cr[30] = {0}; 
     
-    fscanf(qry, "%d %d %s %s", &r1, &r2, cc, cr);
+    int lidos = fscanf(qry, " R%d R%d %29s %29s", &r1, &r2, cc, cr);
+
+    if (lidos != 4) {
+        fprintf(txt, "p?: Erro na leitura dos parametros. Lidos: %d\n", lidos);
+        return;
+    }
+    
+    if (r1 < 0 || r2 < 0 || r1 >= MAX_REGS || r2 >= MAX_REGS) {
+        fprintf(txt, "p?: Erro. Indice de registrador invalido (R%d, R%d).\n", r1, r2);
+        return;
+    }
 
     if (!regs[r1].ativo || !regs[r2].ativo) {
         fprintf(txt, "p?: Erro. Registradores R%d ou R%d nao estao ativos.\n", r1, r2);
@@ -266,21 +303,21 @@ void processar_qry(const char *arquivo_qry, Graph g, exHash quadras, FILE *svg, 
         return;
     }
     
-    char comando[10];
+    char comando[15] = {0};
 
-    while (fscanf(qry, "%s", comando) != EOF) {
+    while (fscanf(qry, "%14s", comando) != EOF) {
         if (strcmp(comando, "@o?") == 0) {
             cmd_o(qry, txt, svg, quadras);
         } else if (strcmp(comando, "mvm") == 0) {
             cmd_mvm(qry, g);
         } else if (strcmp(comando, "regs") == 0) {
             cmd_regs(qry, txt, svg, g);
-        } else if(strcmp(comando, "exp") == 0){
+        } else if (strcmp(comando, "exp") == 0) {
             cmd_exp(qry, svg, g);
-        } else if(strcmp(comando, "p?") == 0){
+        } else if (strcmp(comando, "p?") == 0) {
             cmd_p(qry, txt, svg, g);
-        } else{
-            printf("Comando do qry inválido: %s\n", comando);
+        } else {
+            printf("Comando do qry inválido ou desconsiderado: %s\n", comando);
         }
     }
     
