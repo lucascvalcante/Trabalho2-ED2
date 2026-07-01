@@ -19,5 +19,12 @@
 exHash ler_arquivo_geo(const char* nome_arquivo, int tamanho_hash);
 
 
+/// @brief Calcula os limites do arquivo geo (para melhorar a escrita no svg)
+/// @param mapa Ponteiro par a tabela hash contendo os dados do geo
+/// @param min_x Coordenada 'x' mínima
+/// @param min_y Coordenada 'y' mínima
+/// @param max_x Coordenada 'x' máxima
+/// @param max_y Coordena 'y' máxima
+void geo_calcular_limites(exHash mapa, double *min_x, double *min_y, double *max_x, double *max_y);
 
 #endif
