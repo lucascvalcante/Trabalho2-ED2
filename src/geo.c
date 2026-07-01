@@ -44,7 +44,6 @@ exHash ler_arquivo_geo(const char* nome_arquivo, int tamanho_hash){
     return tabela;
 }
 
-// Em geo.c (perto do final do arquivo)
 
 typedef struct {
     double min_x, min_y, max_x, max_y;
