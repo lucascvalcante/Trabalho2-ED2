@@ -84,16 +84,18 @@ void fechar_path_svg(FILE *svg){
     fprintf(svg, "\" />\n");
 }
 
-void desenhar_animacao_svg(FILE *svg, const char* id_caminho, const char* velocidade){
+void desenhar_animacao_svg(FILE *svg, const char* id_caminho, const char* velocidade, const char* cor){
     if(!svg) return;
 
-    fprintf(svg, "    <circle cx=\"0\" cy=\"0\" r=\"10\" fill=\"red\">\n");
-    fprintf(svg, "        <animateMotion dur=\"%s\" repeatCount=\"indefinite\">\n", velocidade);
+    fprintf(svg, "    <g transform=\"scale(1.8)\">\n");
+    fprintf(svg, "        <animateMotion dur=\"%s\" repeatCount=\"indefinite\" rotate=\"auto\">\n", velocidade);
     fprintf(svg, "            <mpath xlink:href=\"#%s\"/>\n", id_caminho);
     fprintf(svg, "        </animateMotion>\n");
-    fprintf(svg, "    </circle>\n");
-}
-
+    fprintf(svg, "        <rect x=\"-8\" y=\"-4\" width=\"16\" height=\"8\" rx=\"2\" fill=\"%s\" stroke=\"black\" stroke-width=\"0.5\"/>\n", cor);
+    fprintf(svg, "        <rect x=\"-4\" y=\"-7\" width=\"7\" height=\"4\" rx=\"1\" fill=\"%s\" stroke=\"black\" stroke-width=\"0.5\"/>\n", cor);
+    fprintf(svg, "        <circle cx=\"-5\" cy=\"5\" r=\"2.2\" fill=\"black\"/>\n");
+    fprintf(svg, "        <circle cx=\"5\" cy=\"5\" r=\"2.2\" fill=\"black\"/>\n");
+    fprintf(svg, "    </g>\n");}
 
 void svg_rect_componente_conexo(FILE *svg, char *cor, double min_x, double min_y, double max_x, double max_y){
     if(!svg) return;

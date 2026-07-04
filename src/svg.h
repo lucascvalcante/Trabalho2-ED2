@@ -99,8 +99,8 @@ void fechar_path_svg(FILE *svg);
 /// @param svg Ponteiro para o svg
 /// @param id_caminho identificador do caminho
 /// @param velocidade Velocidade da animação
-void desenhar_animacao_svg(FILE *svg, const char* id_caminho, const char* velocidade);
-
+/// @param cor Cor do objeto da animação
+void desenhar_animacao_svg(FILE *svg, const char* id_caminho, const char* velocidade, const char* cor);
 
 /// @brief Desenha um retângulo tracejado para delimitar uma componente fortemente conexa (ilha viária)
 /// @param svg Ponteiro para o arquivo svg
