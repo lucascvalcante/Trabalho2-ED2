@@ -11,7 +11,7 @@ FILE *init_svg(const char* nome_arquivo, double min_x, double min_y, double max_
         return NULL;
     }
 
-    double margem = 500.0;
+    double margem = SVG_MARGEM; 
     double vx = min_x - margem;
     double vy = min_y - margem;
     double vw = max_x - min_x + 2 * margem;

@@ -14,6 +14,7 @@
 
 #include "graph.h"
 #include <stdio.h>
+#define SVG_MARGEM 500.0
 
 /// @brief Inicia o arquivo svg com a tag de início
 /// @param nome_arquivo Nome do arquivo svg
