@@ -243,7 +243,7 @@ static void tarjan_strongconnect(Graph g, int v, double vl, int *idx, TarjanNode
 
     Edge_t aresta = getFirstEdge(g, v);
     while (aresta != NULL) {
-        if (getEdgeVm(aresta) < vl) {
+        if (isEdgeActive(aresta)) {
             int w = getEdgeDest(aresta);
             
             if (nodes[w].index == -1) { 
@@ -276,6 +276,14 @@ static void tarjan_strongconnect(Graph g, int v, double vl, int *idx, TarjanNode
 int encontrar_componentes_conexos(Graph g, double vl, int *componentes){
     int n = getNumVertices(g);
 
+    for (int i = 0; i < n; i++) {
+        Edge_t e = getFirstEdge(g, i);
+        while (e != NULL) {
+            setEdgeActivaded(e, getEdgeVm(e) >= vl);
+            e = getNextEdge(e);
+        }
+    }
+
     TarjanNode *nodes = malloc(n * sizeof(TarjanNode));
     int *pilha = malloc(n * sizeof(int));
     int topo = -1;
@@ -297,6 +305,14 @@ int encontrar_componentes_conexos(Graph g, double vl, int *componentes){
 
     free(nodes);
     free(pilha);
+
+    for (int i = 0; i < n; i++) {
+        Edge_t e = getFirstEdge(g, i);
+        while (e != NULL) {
+            setEdgeActivaded(e, true);
+            e = getNextEdge(e);
+        }
+    }
     
     return num_componentes;
 }
@@ -324,6 +340,15 @@ static int buscar_conjunto(int v, int *pai) {
     if (v == pai[v]) return v;
     pai[v] = buscar_conjunto(pai[v], pai);
     return pai[v];
+}
+
+static Edge* encontrar_aresta_reciproca(Graph g, int origem, int destino) {
+    Edge *atual = g->E[destino];
+    while (atual != NULL) {
+        if (atual->dest == origem) return atual;
+        atual = atual->next;
+    }
+    return NULL;
 }
 
 static void unir_conjuntos(int a, int b, int *pai, int *rank) {
@@ -381,8 +406,12 @@ void calcular_mst_kruskal(Graph g) {
         
         if (buscar_conjunto(u, pai) != buscar_conjunto(v, pai)) {
             setEdgeActivaded(todas_arestas[i].aresta, true);
+
+            Edge *reciproca = encontrar_aresta_reciproca(g, u, v);
+            if (reciproca != NULL) {
+                setEdgeActivaded(reciproca, true);
+            }   
             mst_count++;
-            
             unir_conjuntos(u, v, pai, rank);
             if (mst_count == num_v - 1) break;
         }
