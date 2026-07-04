@@ -87,7 +87,7 @@ void fechar_path_svg(FILE *svg){
 void desenhar_animacao_svg(FILE *svg, const char* id_caminho, const char* velocidade){
     if(!svg) return;
 
-    fprintf(svg, "    <circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"red\">\n");
+    fprintf(svg, "    <circle cx=\"0\" cy=\"0\" r=\"10\" fill=\"red\">\n");
     fprintf(svg, "        <animateMotion dur=\"%s\" repeatCount=\"indefinite\">\n", velocidade);
     fprintf(svg, "            <mpath xlink:href=\"#%s\"/>\n", id_caminho);
     fprintf(svg, "        </animateMotion>\n");
