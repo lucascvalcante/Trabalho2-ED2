@@ -81,8 +81,8 @@ const char* get_quadra_sw(Quadra q) {
 
 void get_quadra_ancora(Quadra q, double* ancora_x, double* ancora_y) {
     if (!q || !ancora_x || !ancora_y) return;
-    *ancora_x = q->x + q->w;
-    *ancora_y = q->y + q->h;
+    *ancora_x = q->x;
+    *ancora_y = q->y;
 }
 
 void free_quadra(Quadra q) {
