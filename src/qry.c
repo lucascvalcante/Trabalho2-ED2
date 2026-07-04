@@ -183,12 +183,13 @@ static void cmd_exp(FILE *qry, FILE *svg, Graph g){
                     double nova_vm = getEdgeVm(aresta) * 1.5; 
                     setEdgeVm(aresta, nova_vm);
                     ruas_atualizadas++;
-
                     int dest = getEdgeDest(aresta);
-                    double dx = getVertexX(g, dest);
-                    double dy = getVertexY(g, dest);
 
-                    desenhar_linha_svg(svg, ox, oy, dx, dy, "red", "7.0px");
+                    if(i < dest){
+                        double dx = getVertexX(g, dest);
+                        double dy = getVertexY(g, dest);
+                        desenhar_linha_svg(svg, ox, oy, dx, dy, "red", "7.0px");
+                    }
                 }
             }
             aresta = getNextEdge(aresta);
