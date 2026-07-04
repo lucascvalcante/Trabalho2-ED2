@@ -18,11 +18,21 @@ static void desenhar_quadra_cb(const char* chave, void* dado, void* extra) {
     (void)chave;
     FILE *svg = (FILE*) extra;
     Quadra q = (Quadra) dado;
+    
+    double qx = get_quadra_x(q);
+    double qy = get_quadra_y(q);
+    double qw = get_quadra_w(q);
+    double qh = get_quadra_h(q);
+
     desenhar_retangulo_svg(svg,
         get_quadra_x(q), get_quadra_y(q),
         get_quadra_w(q), get_quadra_h(q),
         get_quadra_cfill(q), get_quadra_sw(q), get_quadra_cstrk(q),
         1.0);
+    
+    double centro_x = qx + qw / 2.0;
+    double centro_y = qy + qh / 2.0;
+    desenhar_texto_centralizado_svg(svg, centro_x, centro_y, get_quadra_cep(q), "black", 12.0);
 }
 
 static void calcular_limites_totais(exHash mapa, Graph g, double *min_x, double *min_y, double *max_x, double *max_y) {
