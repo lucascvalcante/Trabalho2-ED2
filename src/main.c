@@ -8,10 +8,22 @@
 #include "qry.h"
 #include "exHash.h"
 #include <math.h>
+#include "quadra.h"
 
 #define PATH_SIZE 1024
 #define TAMANHO_HASH 1000
 
+
+static void desenhar_quadra_cb(const char* chave, void* dado, void* extra) {
+    (void)chave;
+    FILE *svg = (FILE*) extra;
+    Quadra q = (Quadra) dado;
+    desenhar_retangulo_svg(svg,
+        get_quadra_x(q), get_quadra_y(q),
+        get_quadra_w(q), get_quadra_h(q),
+        get_quadra_cfill(q), get_quadra_sw(q), get_quadra_cstrk(q),
+        1.0);
+}
 
 static void calcular_limites_totais(exHash mapa, Graph g, double *min_x, double *min_y, double *max_x, double *max_y) {
     *min_x = INFINITY;
@@ -120,7 +132,11 @@ int main(int argc, char *argv[]) {
     printf("[*] Gerando SVG base: %s\n", path_svg_out);
     FILE *svg = init_svg(path_svg_out, min_x, min_y, max_x, max_y);
     
-    if (g != NULL && svg != NULL) {
+    if (mapa != NULL && svg != NULL) {
+        foreach_exHash(mapa, desenhar_quadra_cb, svg);
+    }
+
+    if(g != NULL && svg != NULL){
         svg_desenha_mapa_base(svg, g);
     }
 
@@ -132,7 +148,8 @@ int main(int argc, char *argv[]) {
         FILE *txt = fopen(path_txt_out, "w");
         
         if (txt != NULL) {
-            processar_qry(path_qry_completo, g, mapa, svg, txt);
+            double topo_y = min_y - SVG_MARGEM;
+            processar_qry(path_qry_completo, g, mapa, svg, txt, topo_y);
             fclose(txt);
         } else {
             fprintf(stderr, "Erro ao criar arquivo TXT: %s\n", path_txt_out);
