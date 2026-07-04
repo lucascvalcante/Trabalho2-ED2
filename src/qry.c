@@ -262,7 +262,7 @@ static void cmd_p(FILE *qry, FILE *txt, FILE *svg, Graph g) {
         no_atual = getNextList(caminho_curto, no_atual);
     }
     fechar_path_svg(svg);
-    desenhar_animacao_svg(svg, id_curto, "6s"); 
+    desenhar_animacao_svg(svg, id_curto, "6s", "red"); 
     iniciar_path_svg(svg, id_rapido, cr, "6.0px");
 
     no_atual = getFirstList(caminho_rapido);
@@ -283,7 +283,7 @@ static void cmd_p(FILE *qry, FILE *txt, FILE *svg, Graph g) {
         no_atual = getNextList(caminho_rapido, no_atual);
     }
     fechar_path_svg(svg);
-    desenhar_animacao_svg(svg, id_rapido, "4s"); 
+    desenhar_animacao_svg(svg, id_rapido, "4s", "black"); 
     desenhar_marcador_svg(svg, ix, iy, "I", "black");
     desenhar_marcador_svg(svg, fx, fy, "F", "black");    fprintf(txt, "p?: Trajetos calculados entre R%d e R%d.\n", r1, r2);
     fprintf(txt, "   -> Caminho mais curto (%s): %d vertices percorridos.\n", cc, passos_curto);
