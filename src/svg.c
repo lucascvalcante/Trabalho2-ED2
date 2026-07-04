@@ -173,3 +173,12 @@ void desenhar_marcador_svg(FILE *svg, double x, double y, const char* letra, con
             x, y, cor, letra);
 }
 
+
+void desenhar_texto_centralizado_svg(FILE *svg, double cx, double cy, const char* txt, const char* cor, double tamanho_fonte){
+    if(!svg) return;
+
+    fprintf(svg, "    <text x=\"%f\" y=\"%f\" fill=\"%s\" font-family=\"sans-serif\" font-size=\"%.1fpx\" "
+                 "text-anchor=\"middle\" dominant-baseline=\"central\">%s</text>\n",
+            cx, cy, cor, tamanho_fonte, txt);
+}
+

@@ -149,4 +149,15 @@ void desenhar_bounding_box(FILE *svg, double x, double y, double largura, double
 /// @param cor Cor da borda do círculo e do texto
 void desenhar_marcador_svg(FILE *svg, double x, double y, const char* letra, const char* cor);
 
+
+/// @brief Desenha um texto centralizado horizontal e verticalmente em um ponto (usado para exibir o CEP no centro da quadra)
+/// @param svg Ponteiro para o arquivo svg
+/// @param cx Coordenada 'x' do centro do texto
+/// @param cy Coordenada 'y' do centro do texto
+/// @param txt Texto a ser exibido
+/// @param cor Cor do texto
+/// @param tamanho_fonte Tamanho da fonte em pixels
+void desenhar_texto_centralizado_svg(FILE *svg, double cx, double cy, const char* txt, const char* cor, double tamanho_fonte);
+
+
 #endif
