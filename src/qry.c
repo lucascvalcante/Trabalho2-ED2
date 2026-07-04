@@ -270,9 +270,8 @@ static void cmd_p(FILE *qry, FILE *txt, FILE *svg, Graph g) {
     }
     fechar_path_svg(svg);
     desenhar_animacao_svg(svg, "id_rapido", "4s"); 
-    desenhar_texto_svg(svg, regs[r1].x, regs[r1].y - 5, "I", "black");
-    desenhar_texto_svg(svg, regs[r2].x, regs[r2].y - 5, "F", "black");
-
+    desenhar_marcador_svg(svg, regs[r1].x, regs[r1].y, "I", "black");
+    desenhar_marcador_svg(svg, regs[r2].x, regs[r2].y, "F", "black");
     fprintf(txt, "p?: Trajetos calculados entre R%d e R%d.\n", r1, r2);
     fprintf(txt, "   -> Caminho mais curto (%s): %d vertices percorridos.\n", cc, passos_curto);
     fprintf(txt, "   -> Caminho mais rapido (%s): %d vertices percorridos.\n", cr, passos_rapido);
