@@ -148,11 +148,12 @@ static void cmd_regs(FILE *qry, FILE *txt, FILE *svg, Graph g) {
         }
 
         if (possui_vertices) {
-            double largura = max_x - min_x;
-            double altura = max_y - min_y;
+            double margem = 10.0;
+            double largura = (max_x - min_x) + 2 * margem;
+            double altura = (max_y - min_y) + 2 * margem;
             const char* cor = cores[c % num_cores];
             
-            desenhar_bounding_box(svg, min_x, min_y, largura, altura, cor, 0.5);
+            desenhar_bounding_box(svg, min_x - margem, min_y - margem, largura, altura, cor, 0.5);
         }
     }
     free(componentes); 
@@ -187,7 +188,7 @@ static void cmd_exp(FILE *qry, FILE *svg, Graph g){
                     double dx = getVertexX(g, dest);
                     double dy = getVertexY(g, dest);
 
-                    desenhar_linha_svg(svg, ox, oy, dx, dy, "red", "4.0px");
+                    desenhar_linha_svg(svg, ox, oy, dx, dy, "red", "7.0px");
                 }
             }
             aresta = getNextEdge(aresta);
@@ -196,6 +197,13 @@ static void cmd_exp(FILE *qry, FILE *svg, Graph g){
 }   
 
 static void cmd_p(FILE *qry, FILE *txt, FILE *svg, Graph g) {
+    static int contador_percurso = 0;
+    contador_percurso++;
+
+    char id_curto[32], id_rapido[32];
+    snprintf(id_curto, sizeof(id_curto), "id_curto_%d", contador_percurso);
+    snprintf(id_rapido, sizeof(id_rapido), "id_rapido_%d", contador_percurso);
+    
     int r1 = -1, r2 = -1;
     char cc[30] = {0}, cr[30] = {0}; 
     
@@ -233,7 +241,7 @@ static void cmd_p(FILE *qry, FILE *txt, FILE *svg, Graph g) {
         return;
     }
 
-    iniciar_path_svg(svg, "id_curto", cc, "4.0px");
+    iniciar_path_svg(svg, id_curto, cc, "6.0px");
 
     Node no_atual = getFirstList(caminho_curto);
     bool eh_inicio = true;
@@ -253,8 +261,8 @@ static void cmd_p(FILE *qry, FILE *txt, FILE *svg, Graph g) {
         no_atual = getNextList(caminho_curto, no_atual);
     }
     fechar_path_svg(svg);
-    desenhar_animacao_svg(svg, "id_curto", "6s"); 
-    iniciar_path_svg(svg, "id_rapido", cr, "4.0px");
+    desenhar_animacao_svg(svg, id_curto, "6s"); 
+    iniciar_path_svg(svg, id_rapido, cr, "6.0px");
 
     no_atual = getFirstList(caminho_rapido);
     eh_inicio = true;
@@ -274,7 +282,7 @@ static void cmd_p(FILE *qry, FILE *txt, FILE *svg, Graph g) {
         no_atual = getNextList(caminho_rapido, no_atual);
     }
     fechar_path_svg(svg);
-    desenhar_animacao_svg(svg, "id_rapido", "4s"); 
+    desenhar_animacao_svg(svg, id_rapido, "4s"); 
     desenhar_marcador_svg(svg, ix, iy, "I", "black");
     desenhar_marcador_svg(svg, fx, fy, "F", "black");    fprintf(txt, "p?: Trajetos calculados entre R%d e R%d.\n", r1, r2);
     fprintf(txt, "   -> Caminho mais curto (%s): %d vertices percorridos.\n", cc, passos_curto);
