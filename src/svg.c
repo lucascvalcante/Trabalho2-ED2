@@ -19,9 +19,10 @@ FILE *init_svg(const char* nome_arquivo, double min_x, double min_y, double max_
 
     fprintf(svg, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
     fprintf(svg, "<svg xmlns=\"http://www.w3.org/2000/svg\" "
-                 "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-                 "viewBox=\"%.2f %.2f %.2f %.2f\">\n",
-                 vx, vy, vw, vh);
+             "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
+             "width=\"%.2f\" height=\"%.2f\" "
+             "viewBox=\"%.2f %.2f %.2f %.2f\">\n",
+             vw, vh, vx, vy, vw, vh);
     fprintf(svg, "<g>\n");    return svg;
 }
 
@@ -106,44 +107,44 @@ void svg_rect_componente_conexo(FILE *svg, char *cor, double min_x, double min_y
 }
 
 
-void svg_desenha_mapa_base(FILE *svg, Graph g){
-    if (!svg || !g) return;
+    void svg_desenha_mapa_base(FILE *svg, Graph g){
+        if (!svg || !g) return;
 
-        fprintf(svg, "  <defs>\n");
-        fprintf(svg, "    <marker id=\"mArrow\" markerWidth=\"4\" markerHeight=\"4\" refX=\"4.0\" refY=\"2.0\" orient=\"auto\">\n");
-        fprintf(svg, "      <path d=\"M0,0 L0,4.0 L4.0,2.0 z\" style=\"fill: #000000;\" />\n");
-        fprintf(svg, "    </marker>\n");
-        fprintf(svg, "  </defs>\n\n");
+            fprintf(svg, "  <defs>\n");
+            fprintf(svg, "    <marker id=\"mArrow\" markerWidth=\"4\" markerHeight=\"4\" refX=\"4.0\" refY=\"2.0\" orient=\"auto\">\n");
+            fprintf(svg, "      <path d=\"M0,0 L0,4.0 L4.0,2.0 z\" style=\"fill: #000000;\" />\n");
+            fprintf(svg, "    </marker>\n");
+            fprintf(svg, "  </defs>\n\n");
 
-        int total_vertices = getNumVertices(g);
+            int total_vertices = getNumVertices(g);
 
-        for (int i = 0; i < total_vertices; i++) {
-            double ox = getVertexX(g, i);
-            double oy = getVertexY(g, i);
-            char *id_origem = getVertexId(g, i);
+            for (int i = 0; i < total_vertices; i++) {
+                double ox = getVertexX(g, i);
+                double oy = getVertexY(g, i);
+                char *id_origem = getVertexId(g, i);
 
-            fprintf(svg, "    <circle id=\"%s\" cx=\"%f\" cy=\"%f\" r=\"4.0\" fill=\"blue\" "
-                        "stroke=\"black\" fill-opacity=\"0.5\" />\n", id_origem, ox, oy);
+                fprintf(svg, "    <circle id=\"%s\" cx=\"%f\" cy=\"%f\" r=\"4.0\" fill=\"blue\" "
+                            "stroke=\"black\" fill-opacity=\"0.5\" />\n", id_origem, ox, oy);
 
-            fprintf(svg, "    <text x=\"%f\" y=\"%f\" fill=\"blue\" font-size=\"4\" "
-                        "text-anchor=\"middle\">%s</text>\n", ox, oy - 6.0, id_origem);
+                fprintf(svg, "    <text x=\"%f\" y=\"%f\" fill=\"blue\" font-size=\"4\" "
+                            "text-anchor=\"middle\">%s</text>\n", ox, oy - 6.0, id_origem);
 
-            Edge_t aresta = getFirstEdge(g, i);
-            while (aresta != NULL) {
-                int dest_index = getEdgeDest(aresta);
-                
-                double dx = getVertexX(g, dest_index);
-                double dy = getVertexY(g, dest_index);
+                Edge_t aresta = getFirstEdge(g, i);
+                while (aresta != NULL) {
+                    int dest_index = getEdgeDest(aresta);
+                    
+                    double dx = getVertexX(g, dest_index);
+                    double dy = getVertexY(g, dest_index);
 
-                fprintf(svg, "    <path d=\"M%f,%f L%f,%f\" "
-                            "stroke=\"black\" fill=\"none\" stroke-width=\"1\" "
-                            "marker-end=\"url(#mArrow)\" />\n",
-                            ox, oy, dx, dy);
+                    fprintf(svg, "    <path d=\"M%f,%f L%f,%f\" "
+                                "stroke=\"black\" fill=\"none\" stroke-width=\"1\" "
+                                "marker-end=\"url(#mArrow)\" />\n",
+                                ox, oy, dx, dy);
 
-                aresta = getNextEdge(aresta);
-        }
-    }    
-}
+                    aresta = getNextEdge(aresta);
+            }
+        }    
+    }
 
 
 void desenhar_linha_tracejada(FILE *svg, double x1, double y1, double x2, double y2, const char* cor, const char* sw){
