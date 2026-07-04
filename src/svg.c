@@ -161,3 +161,15 @@ void desenhar_bounding_box(FILE *svg, double x, double y, double largura, double
     fprintf(svg, "    <rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" fill-opacity=\"%f\" stroke=\"%s\" stroke-width=\"1.0px\" />\n",
             x, y, largura, altura, cor, opacidade, cor);
 }
+
+
+void desenhar_marcador_svg(FILE *svg, double x, double y, const char* letra, const char* cor){
+    if(!svg) return;
+
+    fprintf(svg, "    <circle cx=\"%f\" cy=\"%f\" r=\"12\" fill=\"white\" stroke=\"%s\" stroke-width=\"2\" />\n",
+            x, y, cor);
+    fprintf(svg, "    <text x=\"%f\" y=\"%f\" font-family=\"Arial\" font-size=\"14\" font-weight=\"bold\" "
+                 "fill=\"%s\" text-anchor=\"middle\" dominant-baseline=\"central\">%s</text>\n",
+            x, y, cor, letra);
+}
+

@@ -140,4 +140,13 @@ void desenhar_linha_tracejada(FILE *svg, double x1, double y1, double x2, double
 /// @param opacidade Opacidade da bouding box
 void desenhar_bounding_box(FILE *svg, double x, double y, double largura, double altura, const char *cor, double opacidade);
 
+
+/// @brief Desenha um marcador circular com uma letra centralizada (usado para indicar início 'I' e fim 'F' de um percurso)
+/// @param svg Ponteiro para o arquivo svg
+/// @param x Coordenada 'x' do centro do marcador
+/// @param y Coordenada 'y' do centro do marcador
+/// @param letra Texto a ser centralizado dentro do marcador
+/// @param cor Cor da borda do círculo e do texto
+void desenhar_marcador_svg(FILE *svg, double x, double y, const char* letra, const char* cor);
+
 #endif
