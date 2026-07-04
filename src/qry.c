@@ -193,7 +193,7 @@ static void cmd_exp(FILE *qry, FILE *svg, Graph g){
             aresta = getNextEdge(aresta);
         }
     }
-}
+}   
 
 static void cmd_p(FILE *qry, FILE *txt, FILE *svg, Graph g) {
     int r1 = -1, r2 = -1;
@@ -202,7 +202,7 @@ static void cmd_p(FILE *qry, FILE *txt, FILE *svg, Graph g) {
     int lidos = fscanf(qry, " R%d R%d %29s %29s", &r1, &r2, cc, cr);
 
     if (lidos != 4) {
-        fprintf(txt, "p?: Erro na leitura dos parametros. Lidos: %d\n", lidos);
+        fprintf(txt, "p?: Erro na l eitura dos parametros. Lidos: %d\n", lidos);
         return;
     }
     
@@ -218,6 +218,11 @@ static void cmd_p(FILE *qry, FILE *txt, FILE *svg, Graph g) {
 
     int start_v = obter_vertice_mais_proximo(g, regs[r1].x, regs[r1].y);
     int end_v = obter_vertice_mais_proximo(g, regs[r2].x, regs[r2].y);
+    double ix = getVertexX(g, start_v);
+    double iy = getVertexY(g, start_v);
+    double fx = getVertexX(g, end_v);
+    double fy = getVertexY(g, end_v);
+
     Lista caminho_curto = dijkstra(g, start_v, end_v, false);
     Lista caminho_rapido = dijkstra(g, start_v, end_v, true);
 
@@ -270,9 +275,8 @@ static void cmd_p(FILE *qry, FILE *txt, FILE *svg, Graph g) {
     }
     fechar_path_svg(svg);
     desenhar_animacao_svg(svg, "id_rapido", "4s"); 
-    desenhar_marcador_svg(svg, regs[r1].x, regs[r1].y, "I", "black");
-    desenhar_marcador_svg(svg, regs[r2].x, regs[r2].y, "F", "black");
-    fprintf(txt, "p?: Trajetos calculados entre R%d e R%d.\n", r1, r2);
+    desenhar_marcador_svg(svg, ix, iy, "I", "black");
+    desenhar_marcador_svg(svg, fx, fy, "F", "black");    fprintf(txt, "p?: Trajetos calculados entre R%d e R%d.\n", r1, r2);
     fprintf(txt, "   -> Caminho mais curto (%s): %d vertices percorridos.\n", cc, passos_curto);
     fprintf(txt, "   -> Caminho mais rapido (%s): %d vertices percorridos.\n", cr, passos_rapido);
 
