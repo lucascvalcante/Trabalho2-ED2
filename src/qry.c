@@ -20,7 +20,7 @@ Registradores regs[MAX_REGS];
 
 //-- FUNÇÕES ESTÁTICAS DE COMANDOS: --//
 
-static void cmd_o(FILE *qry, FILE *txt, FILE *svg, exHash quadras) {
+static void cmd_o(FILE *qry, FILE *txt, FILE *svg, exHash quadras, double topo_y) {
     int reg_num = -1, num = 0;
     char cep[30] = {0};
     char face = '\0';
@@ -53,15 +53,15 @@ static void cmd_o(FILE *qry, FILE *txt, FILE *svg, exHash quadras) {
 
     if (face == 'N' || face == 'n') {
         x_end = qx + num;
-        y_end = qy;
+        y_end = qy + qh;
     } else if (face == 'S' || face == 's') {
         x_end = qx + num;
-        y_end = qy + qh;
+        y_end = qy;
     } else if (face == 'L' || face == 'l') {
-        x_end = qx + qw;
+        x_end = qx;
         y_end = qy + num;
     } else if (face == 'O' || face == 'o') {
-        x_end = qx;
+        x_end = qx + qw;
         y_end = qy + num;
     }
 
@@ -72,11 +72,11 @@ static void cmd_o(FILE *qry, FILE *txt, FILE *svg, exHash quadras) {
     fprintf(txt, "@o? reg %d -> CEP: %s, Face: %c, Num: %d | Coordenadas: X=%.2f, Y=%.2f\n", 
             reg_num, cep, face, num, x_end, y_end);
 
-    desenhar_linha_tracejada(svg, x_end, y_end, x_end, 0.0, "red", "1.0px");
+    desenhar_linha_tracejada(svg, x_end, y_end, x_end, topo_y, "red", "1.0px");
     
     char txt_reg[10] = {0};
     sprintf(txt_reg, "R%d", reg_num);
-    desenhar_texto_svg(svg, x_end, 10.0, txt_reg, "red"); 
+    desenhar_texto_svg(svg, x_end, topo_y + 10.0, txt_reg, "red"); 
 }
 
 static void cmd_mvm(FILE *qry, Graph g) {
@@ -296,7 +296,7 @@ static void cmd_p(FILE *qry, FILE *txt, FILE *svg, Graph g) {
 
 //-- FUNÇÃO PRINCIPAL: --//
 
-void processar_qry(const char *arquivo_qry, Graph g, exHash quadras, FILE *svg, FILE *txt) {
+void processar_qry(const char *arquivo_qry, Graph g, exHash quadras, FILE *svg, FILE *txt, double topo_y) {
     FILE *qry = fopen(arquivo_qry, "r");
     if (!qry) {
         printf("Não foi possível realizar a leitura do arquivo qry: %s\n", arquivo_qry);
@@ -307,7 +307,7 @@ void processar_qry(const char *arquivo_qry, Graph g, exHash quadras, FILE *svg, 
 
     while (fscanf(qry, "%14s", comando) != EOF) {
         if (strcmp(comando, "@o?") == 0) {
-            cmd_o(qry, txt, svg, quadras);
+            cmd_o(qry, txt, svg, quadras, topo_y);
         } else if (strcmp(comando, "mvm") == 0) {
             cmd_mvm(qry, g);
         } else if (strcmp(comando, "regs") == 0) {

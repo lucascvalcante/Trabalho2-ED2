@@ -20,6 +20,7 @@
 /// @param quadras Tabela hash contendo as quadras
 /// @param svg Arquivo svg de saída
 /// @param txt Arquivo txt de saída
-void processar_qry(const char *arquivo_qry, Graph g, exHash quadras, FILE *svg, FILE *txt);
+/// @param topo_y Recebe a coordenada 'y' do topo do mapa
+void processar_qry(const char *arquivo_qry, Graph g, exHash quadras, FILE *svg, FILE *txt, double topo_y);
 
 #endif
