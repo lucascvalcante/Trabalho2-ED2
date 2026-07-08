@@ -5,13 +5,10 @@
  * @file graph.h
  * @brief Definição do Tipo Abstrato de Dados (TAD) para um Grafo Direcionado.
  * Este módulo fornece a interface para a criação, manipulação e liberação de 
- * um grafo baseado em Listas de Adjacência. Ele oculta a implementação interna 
- * (Struct Opaca), garantindo o encapsulamento dos dados. O grafo é focado em 
+ * um grafo baseado em Listas de Adjacência. O grafo é focado em 
  * representar uma malha viária, onde os vértices são cruzamentos e as arestas 
  * são os trechos de rua que os conectam.
- * @note As estruturas internas (Graph_s, Vertex, Edge) estão definidas apenas
- * no arquivo graph.c para manter a opacidade do TAD.
-
+ * 
  */
 #include <stdbool.h>
 
